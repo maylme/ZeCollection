@@ -26,7 +26,7 @@
 	        $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 	        /*** prepare the insert ***/
-	        $stmt = $dbh->prepare("SELECT username FROM user WHERE user_id = :user_id");
+	        $stmt = $dbh->prepare("SELECT username FROM users WHERE user_id = :user_id");
 
 	        /*** bind the parameters ***/
 	        $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);

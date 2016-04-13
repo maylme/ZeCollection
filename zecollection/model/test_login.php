@@ -34,7 +34,7 @@ else
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         /*** prepare the insert ***/
-        $stmt = $dbh->prepare("SELECT username FROM user 
+        $stmt = $dbh->prepare("SELECT username FROM users 
         WHERE user_id = :user_id");
 
         /*** bind the parameters ***/

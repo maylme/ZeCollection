@@ -72,7 +72,7 @@ else
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         /*** prepare the select statement ***/
-        $stmt = $dbh->prepare("SELECT user_id, username, password FROM user
+        $stmt = $dbh->prepare("SELECT user_id, username, password FROM users
                     WHERE username = :username AND password = :password");
 
         /*** bind the parameters ***/

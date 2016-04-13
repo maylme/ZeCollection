@@ -6,34 +6,35 @@ header('Content-Type: application/json');
 /*** first check that both the username, password and form token have been sent ***/
 if(!isset( $_POST['username'], $_POST['password'], $_POST['form_token']))
 {
-    $message = 'Please enter a valid username and password';
+    $message = 'Please enter a valid username and password.';
+
 }
 /*** check the form token is valid ***/
 elseif( $_POST['form_token'] != $_SESSION['form_token'])
 {
-    $message = 'Invalid form submission';
+    $message = 'Invalid form submission.';
 }
 /*** check the username is the correct length ***/
 elseif (strlen( $_POST['username']) > 20 || strlen($_POST['username']) < 4)
 {
-    $message = 'Incorrect Length for Username';
+    $message = 'Incorrect Length for Username.';
 }
 /*** check the password is the correct length ***/
 elseif (strlen( $_POST['password']) > 20 || strlen($_POST['password']) < 4)
 {
-    $message = 'Incorrect Length for Password';
+    $message = 'Incorrect Length for Password.';
 }
 /*** check the username has only alpha numeric characters ***/
 elseif (ctype_alnum($_POST['username']) != true)
 {
     /*** if there is no match ***/
-    $message = "Username must be alpha numeric";
+    $message = "Username must be alpha numeric.";
 }
 /*** check the password has only alpha numeric characters ***/
 elseif (ctype_alnum($_POST['password']) != true)
 {
         /*** if there is no match ***/
-        $message = "Password must be alpha numeric";
+        $message = "Password must be alpha numeric.";
 }
 else
 {
@@ -58,7 +59,7 @@ else
     $mysql_dbname = 'zecollection';
 
     try
-    {
+    {        
         $dbh = new PDO("mysql:host=$mysql_hostname;dbname=$mysql_dbname", $mysql_username, $mysql_password);
         /*** $message = a message saying we have connected ***/
 
@@ -66,7 +67,10 @@ else
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         /*** prepare the insert ***/
-        $stmt = $dbh->prepare("INSERT INTO user (username, password ) VALUES (:username, :password )");
+        $stmt = $dbh->prepare("INSERT INTO users (username, password ) VALUES (:username, :password )");
+
+
+
 
         /*** bind the parameters ***/
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
