@@ -6,10 +6,15 @@ session_start();
 
 header('Content-Type: application/json');
 
+//ici on a 2 variables: 
+$message_error = ""; // message erreur
+$les_collections = null; //les_collections à recupéré
+
+
 /*** check if the users is already logged in ***/
 if(!isset( $_SESSION['user_id'] ))
 {
-   // $message = 'Not connected bastard !';
+    $$message_error = 'Not connected bastard !';
 }
 
 
@@ -46,19 +51,19 @@ else
         $stmt->execute();
 
         /*** check for a result ***/
-        $message = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         /*** if we have no result then fail boat ***/
-        if($message == false)
+        if($result == false)
         {
-            $message = 'Fuuuu';
+            $message_error = 'Fuuuu';
         }
         /*** if we do have a result, all is well ***/
         else
         {   
-            $consoles = $message;
+            $les_collections = $result;
             //print_r($message);
-
+            /*
             $message = '';
 
             foreach ($consoles as $row => $game) {
@@ -71,6 +76,7 @@ else
             }
 
             $message .= '<div class="container">+</div';
+            */
         }
 
 
@@ -78,12 +84,12 @@ else
     catch(Exception $e)
     {
         /*** if we are here, something has gone wrong with the database ***/
-        $message = 'We are unable to process your request. Please try again later"';
+        $message_error = 'We are unable to process your request. Please try again later"';
     }
 }
 ?>
 
 <?php 
-$response = json_encode(array("message"=> $message));
+$response = json_encode(array("les_collections"=> $les_collections, "error" => $message_error));
 
 echo $response; ?>

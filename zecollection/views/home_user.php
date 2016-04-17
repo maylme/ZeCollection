@@ -11,9 +11,14 @@
 			error: function() {
 				console.log("Error.");
 			},
-			success: function(msg) { 
-	        	showCollection(msg.message);
-	        }
+			success: function(reponse) { 
+				//reponse est un objet json:
+				if (reponse.les_collections){
+					console.log(reponse.les_collections);
+				}else{ // ca  a planté
+	       			console.log(reponse.error);
+	       		}
+	       	}
 		});
 	}
 
@@ -21,9 +26,12 @@
 		get_collection();
 	}
 
-	function showCollection(msg) {
+	function showCollection(les_collections) {
+		//ici on va contruire la div de une collection
+
 		$("#collec").html(msg);
 		$("#collec").css({"height":"auto"});
 		$("#collec").css({"display":"block"});
 	}
+
 </script>
