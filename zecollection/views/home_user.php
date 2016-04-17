@@ -14,6 +14,8 @@
 			success: function(reponse) { 
 				//reponse est un objet json:
 				if (reponse.les_collections){
+					//ici foreach lescollections:
+					//showCollection(une_collection)
 					console.log(reponse.les_collections);
 				}else{ // ca  a planté
 	       			console.log(reponse.error);
@@ -26,7 +28,7 @@
 		get_collection();
 	}
 
-	function showCollection(les_collections) {
+	function showCollection(collection) {
 		//ici on va contruire la div de une collection
 
 		$("#collec").html(msg);
