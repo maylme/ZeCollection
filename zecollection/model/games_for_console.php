@@ -9,6 +9,7 @@ header('Content-Type: application/json');
 //ici on a 2 variables: 
 $message_error = ""; // message erreur
 $les_collections = null; //les_collections à recupéré
+$console_id = $_POST['console_id'];
 
 
 /*** check if the users is already logged in ***/
@@ -16,7 +17,6 @@ if(!isset( $_SESSION['user_id'] ))
 {
     $$message_error = 'Not connected bastard !';
 }
-
 
 else
 {
@@ -42,10 +42,12 @@ else
         $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         /*** prepare the select statement ***/
-        $stmt = $dbh->prepare("SELECT console_name, G.console_id, COUNT(*) as nb_jeux FROM games G, consoles C WHERE G.console_id = C.console_id AND G.game_id IN (SELECT DISTINCT game_id FROM items WHERE user_id = :user_id AND jeux = 1) GROUP BY G.console_id");
+       // $stmt = $dbh->prepare("SELECT G.game_id, G.bar_code, G.game_name, G.VERSION, G.editor, G.developer, G.release_year, I.boite, I.calpin, I.jeux, I.price, I.notes FROM games G, items I WHERE G.game_id = I.game_id AND I.user_id = :user_id AND G.console_id = :console_id");
+        $stmt = $dbh->prepare("SELECT * FROM games G, items I WHERE I.user_id = :user_id AND G.console_id = :console_id AND G.game_id = I.game_id");
 
         /*** bind the parameters ***/
         $stmt->bindParam(':user_id', $_SESSION['user_id'], PDO::PARAM_STR);
+        $stmt->bindParam(':console_id', $console_id, PDO::PARAM_STR);
 
         /*** execute the prepared statement ***/
         $stmt->execute();
@@ -62,8 +64,7 @@ else
         else
         {   
             $les_collections = $result;
-        }
-
+        }	
 
     }
     catch(Exception $e)

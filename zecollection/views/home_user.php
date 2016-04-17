@@ -34,7 +34,7 @@
 		console.log(collection);
 		var html = '<div class="container">'+collection.console_name+'<br/>';
 		html += '<br/>Nombre de jeux : '+ collection.nb_jeux;
-        html += '<br/>> Liste des jeux';
+        html += '<br/>> <a href="/views/collection.php?console='+collection.console_id+'">Liste des jeux</a>';
         html += '<br/>> Ajouter un jeu';
         html += '</div>';
 		$("#collec").append(html);
